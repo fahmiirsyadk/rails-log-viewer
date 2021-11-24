@@ -1,7 +1,10 @@
 {
   "name": "rails-log-viewer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "app.js",
+  "bin": {
+    "rails-log-viewer": "app.js"
+  },
   "repository": "https://github.com/fahmiirsyadk/rails-log-viewer",
   "author": "Fahmi Irsyad Khairi <fahmiirsyad10@gmail.com>",
   "license": "MIT"
