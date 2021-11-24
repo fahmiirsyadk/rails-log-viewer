@@ -19,7 +19,6 @@ const logFilter = (arr, keyword) => {
     // grab the string between []
     const regex = /\[(.*?)\]/g;
     const result = text.match(regex);
-    console.log(result);
     return result[1];
   }
   const filterByKeyword = arr.filter(text => {
@@ -44,27 +43,27 @@ const logFilter = (arr, keyword) => {
   return filteredArray;
 }
 
-const outputFile = array => {
-  const fileNameWithTimeStamp = `${Date.now()}.log`;
+const outputFile = (keyword, array) => {
+  const fileNameWithTimeStamp = `[${keyword}]-${Date.now()}.log`;
   const arrayToString = array.join('\n');
   fs.writeFile(fileNameWithTimeStamp, arrayToString, 'utf8')
     .then(() => console.log('File written successfully'))
     .catch(err => console.log(err));
 }
 
-
 // grab second parameter from command line & check if the second parameter is exist
 const execute = (argv) => {
-  console.log(argv);
   if (argv.length > 2) {
     // check if the paramter value extension is .log
     if (argv[2].includes('.log')) {
+      console.log('Reading file...');
       readLogFile(argv[2]).then((data) => {
         const array = textToArray(data);
-        const result = logFilter(array, "500 Internal Server Error");
+        console.log('Filtering log...');
+        const result = logFilter(array, String(argv[3]));
         return result
       }).then(result => {
-        outputFile(result);
+        outputFile(argv[3], result);
       }).catch(err => {
         console.log(err);
       });
